@@ -75,15 +75,21 @@ WHERE rn <= 3;
 
 * number of subscribers who have re-subscribed more than once for each product;
 ```
-SELECT 
-  customer_id
-FROM 
-  tblSubscriptionInfo
-WHERE 
-  subscription_start_date >= '2022-01-01' 
-  AND subscription_start_date < '2023-01-01'
-GROUP BY customer_id
-HAVING COUNT(DISTINCT product_id) > COUNT(product_id);
+WITH resubscribed AS (
+	SELECT 
+	  customer_id,
+	  product_id,
+	  COUNT(*) AS cnt
+	FROM 
+	  tblSubscriptionInfo
+	GROUP BY customer_id, product_id
+	HAVING COUNT(*) > 1
+)
+SELECT
+	product_id,
+	COUNT(DISTINCT customer_id) AS cnt_resubscribed
+FROM resubscribed
+GROUP BY product_id;
 ```
 
 * subscribers who have re-subscribed a higher version of the product in 2023 - for example Autocad 2022 to Autocad 2023.
