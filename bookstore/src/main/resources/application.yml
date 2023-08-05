@@ -1,0 +1,40 @@
+server:
+  port: 3000 # url - http://localhost:3000; swagger ui - http://localhost:3000/swagger-ui/
+
+spring:
+  servlet:
+    multipart:
+      max-file-size: 2MB # max file size for each request.
+      max-request-size: 2MB # max request size for a multipart/form-data.
+  main:
+    web-application-type: servlet
+  # Connect to Postgresql DB
+  datasource:
+    # refer to docker-compose
+    url: jdbc:postgresql://localhost:5432/inventory
+    username: user
+    password: password
+  jpa:
+    hibernate:
+      # drop the table at the end of the session
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+        show_sql: true
+        use_sql_comments: true
+        jdbc:
+          lob:
+            non_contextual_creation: true
+  # If this is specified, all APIs can only be accessed if the authentication is verified or else 403
+#  security:
+#    user:
+#      name: user
+#      password: secret123
+#    user2:
+#      name: user2
+#      password: secret123
+#    user3:
+#      name: user3
+#      password: secret123
