@@ -23,8 +23,8 @@ The microservice URL is available at http://localhost:3000 and the Swagger UI is
 The postman collection is available in `Bookstore.postman_collection.json`
 
 The following is the microservice API service contract for the book store service:
-### 3.1. Checking status of the server
-**Request:** POST
+### 3.1. Checking status of the server (No authentication & authorization needed)
+**Request:** GET
 
 **Endpoint:** 
 ```
@@ -45,7 +45,7 @@ curl --location 'localhost:3000/api/v1/status'
 }
 ```
 
-### 3.2. Add a book to bookstore
+### 3.2. Add a book to bookstore (Authentication & authorization needed)
 **Request:** POST
 
 **Endpoint:**
@@ -63,10 +63,18 @@ localhost:3000/api/v1/bookstore/book
 }
 ```
 
+**Auth:**
+```agsl
+auth type: basic auth
+username: user
+password: secret123
+```
+
 **Sample request:**
 ```agsl
 curl --location 'localhost:3000/api/v1/bookstore/book' \
 --header 'Content-Type: application/json' \
+--header 'Authorization: Basic dXNlcjpzZWNyZXQxMjM=' \
 --data '{
     "title": "book2",
     "author": "author2",
@@ -97,7 +105,17 @@ curl --location 'localhost:3000/api/v1/bookstore/book' \
 }
 ```
 
-### 3.3. Update a book in bookstore
+**Sample response when unauthorized (status code: 401):**
+```agsl
+{
+    "timestamp": 1691288379763,
+    "status": 401,
+    "error": "Unauthorized",
+    "path": "/api/v1/bookstore/book"
+}
+```
+
+### 3.3. Update a book in bookstore (Authentication & authorization needed)
 **Request:** PATCH
 
 **Endpoint:**
@@ -114,10 +132,18 @@ localhost:3000/api/v1/bookstore/book/{bookTitle}
 }
 ```
 
+**Auth:**
+```agsl
+auth type: basic auth
+username: user
+password: secret123
+```
+
 **Sample request:**
 ```agsl
-curl --location --request PATCH 'localhost:3000/api/v1/bookstore/book/book2' \
+curl --location --request PATCH 'localhost:3000/api/v1/bookstore/book/book3' \
 --header 'Content-Type: application/json' \
+--header 'Authorization: Basic dXNlcjpzZWNyZXQxMjM=' \
 --data '{
     "author": "author1",
     "quantity": 30,
@@ -147,7 +173,17 @@ curl --location --request PATCH 'localhost:3000/api/v1/bookstore/book/book2' \
 }
 ```
 
-### 3.4. Get quantity of a book in bookstore
+**Sample response when unauthorized (status code: 401):**
+```agsl
+{
+    "timestamp": 1691288379763,
+    "status": 401,
+    "error": "Unauthorized",
+    "path": "/api/v1/bookstore/book/book3"
+}
+```
+
+### 3.4. Get quantity of a book in bookstore (No authentication & authorization needed)
 **Request:** GET
 
 **Endpoint:**
@@ -178,7 +214,7 @@ curl 'localhost:3000/api/v1/bookstore/book/book-quantity/book2'
 }
 ```
 
-### 3.5. Get all books
+### 3.5. Get all books (No authentication & authorization needed)
 **Request:** GET
 
 **Endpoint:**
@@ -203,7 +239,7 @@ curl 'localhost:3000/api/v1/bookstore/books'
 }
 ```
 
-### 3.6. Get all books by author
+### 3.6. Get all books by author (No authentication & authorization needed)
 **Request:** GET
 
 **Endpoint:**
@@ -215,7 +251,7 @@ localhost:3000/api/v1/bookstore/books?author={author}
 
 **Sample request:**
 ```agsl
-curl 'localhost:3000/api/v1/bookstore/books?author=author1'
+curl 'localhost:3000/api/v1/bookstore/books?author=author2'
 ```
 
 **Sample response (status code: 200):**
@@ -228,7 +264,7 @@ curl 'localhost:3000/api/v1/bookstore/books?author=author1'
 }
 ```
 
-### 3.7. Get all books by price range
+### 3.7. Get all books by price range (No authentication & authorization needed)
 **Request:** GET
 
 **Endpoint:**
@@ -253,7 +289,7 @@ curl 'localhost:3000/api/v1/bookstore/books?upperThreshold=50.0&lowerThreshold=1
 }
 ```
 
-### 3.8. Delete a book in bookstore
+### 3.8. Delete a book in bookstore (Authentication & authorization needed)
 **Request:** DELETE
 
 **Endpoint:**
@@ -263,9 +299,17 @@ localhost:3000/api/v1/bookstore/book/{bookTitle}
 
 **Request Payload:** Not applicable
 
+**Auth:**
+```agsl
+auth type: basic auth
+username: user
+password: secret123
+```
+
 **Sample request:**
 ```agsl
 curl --location --request DELETE 'localhost:3000/api/v1/bookstore/book/book2' \
+--header 'Authorization: Basic dXNlcjpzZWNyZXQxMjM=' \
 --data ''
 ```
 
@@ -288,6 +332,16 @@ curl --location --request DELETE 'localhost:3000/api/v1/bookstore/book/book2' \
 {
     "message": "No book with title: book3",
     "result": null
+}
+```
+
+**Sample response when unauthorized (status code: 401):**
+```agsl
+{
+    "timestamp": 1691288597787,
+    "status": 401,
+    "error": "Unauthorized",
+    "path": "/api/v1/bookstore/book/book2"
 }
 ```
 

@@ -27,14 +27,7 @@ spring:
         jdbc:
           lob:
             non_contextual_creation: true
-  # If this is specified, all APIs can only be accessed if the authentication is verified or else 403
-#  security:
-#    user:
-#      name: user
-#      password: secret123
-#    user2:
-#      name: user2
-#      password: secret123
-#    user3:
-#      name: user3
-#      password: secret123
+  security:
+    user:
+      name: user
+      password: secret123

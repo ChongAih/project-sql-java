@@ -9,6 +9,9 @@
 		{
 			"name": "Bookstore - status",
 			"request": {
+				"auth": {
+					"type": "noauth"
+				},
 				"method": "GET",
 				"header": [],
 				"url": {
@@ -29,6 +32,21 @@
 		{
 			"name": "Bookstore - add book",
 			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "secret123",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "user",
+							"type": "string"
+						}
+					]
+				},
 				"method": "POST",
 				"header": [],
 				"body": {
@@ -89,6 +107,21 @@
 		{
 			"name": "Bookstore - update book",
 			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "user",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "secret123",
+							"type": "string"
+						}
+					]
+				},
 				"method": "PATCH",
 				"header": [],
 				"body": {
@@ -112,6 +145,41 @@
 						"bookstore",
 						"book",
 						"book3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Bookstore - get book quantity",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/api/v1/bookstore/book/book-quantity/book2",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"v1",
+						"bookstore",
+						"book",
+						"book-quantity",
+						"book2"
 					]
 				}
 			},
@@ -175,7 +243,7 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:3000/api/v1/bookstore/books?author=author1",
+					"raw": "localhost:3000/api/v1/bookstore/books?author=author2",
 					"host": [
 						"localhost"
 					],
@@ -189,7 +257,7 @@
 					"query": [
 						{
 							"key": "author",
-							"value": "author1"
+							"value": "author2"
 						}
 					]
 				}
@@ -234,41 +302,6 @@
 							"key": "lowerThreshold",
 							"value": "1.0"
 						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Bookstore - get book quantity",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"method": "GET",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "localhost:3000/api/v1/bookstore/book/book-quantity/book2",
-					"host": [
-						"localhost"
-					],
-					"port": "3000",
-					"path": [
-						"api",
-						"v1",
-						"bookstore",
-						"book",
-						"book-quantity",
-						"book2"
 					]
 				}
 			},
